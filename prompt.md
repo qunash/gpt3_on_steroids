@@ -24,6 +24,7 @@ Using the provided tools, what steps do you need to take to answer the question?
 # 1. Find out the temperature in Paris today.
 # Factual data, use google search.
 url = google_search("temperature in Paris today", 1)[0]
+print('url: ' + url)
 # get page content
 page_text = read_webpage(url)
 # construct a prompt for GPT-3 with the page content to get the temperature in python float format
@@ -41,6 +42,7 @@ year_ago = today - datetime.timedelta(days=365)
 # 3. Find out the temperature in Paris a year ago.
 # Factual data, use google search.
 url = google_search(f"temperature in Paris on {year_ago}", 1)[0]
+print('url: ' + url)
 # get page content
 page_text = read_webpage(url)
 # construct a prompt for GPT-3 with the page content to get the temperature in python float format
@@ -73,10 +75,11 @@ Using the provided tools, what steps do you need to take to answer the question?
 # 1. Find out the location of the last olympic games.
 # Factual data, use google search.
 url = google_search("location of the last olympic games", 1)[0]
+print('url: ' + url)
 # get page content
 page_text = read_webpage(url)
 # construct a prompt for GPT-3 with the page content to get the location
-prompt = f"{page_text}\n\nWhere were the last olympic games held?"
+prompt = f"{page_text}\n\nWhere were the last olympic games held? If you're not sure, or there's no answer to the question, say so."
 # get the answer from GPT-3
 answer = ask_gpt3(prompt)
 print(answer)
