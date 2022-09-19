@@ -7,6 +7,7 @@ import openai
 import requests
 import sys
 import traceback
+import re
 
 cr.init(autoreset=True)
 
@@ -63,9 +64,12 @@ def execute_code(code: str) -> str:
     try:
         exec(code)
     except Exception as e:
-        print("ERROR: Code failed to execute")
-        # print(e)
-        traceback.print_tb(e.__traceback__)
+        print("ERROR: Code failed to execute:")
+        print(e)
+        print(e.args)
+        # traceback.print_tb(e.__traceback__)
+        # print(traceback.format_exc())
+        print(e.__traceback__.tb_frame.f_locals)
     sys.stdout = sys_stdout
     return output.getvalue()
 

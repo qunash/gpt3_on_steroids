@@ -26,10 +26,12 @@ Using the provided tools, what steps do you need to take to answer the question?
 url = google_search("temperature in Paris today", 1)[0]
 # get page content
 page_text = read_webpage(url)
-# construct a prompt for GPT-3 with the page content to get the temperature float
-prompt = f"{page_text}\n\nWhats the temperature in Paris today? Give the answer in python float format:"
+# construct a prompt for GPT-3 with the page content to get the temperature in python float format
+prompt = f"{page_text}\n\nTemperature in Paris today in python float format (e.g. 7.3):"
 # get temperature from GPT-3
-temp = ask_gpt3(prompt)
+temp_today = ask_gpt3(prompt)
+temp_today = float(re.sub(r'[^\d.]', '', temp_today))
+print(f"Temperature in Paris today: {temp_today}")
 
 # 2. Find out the date a year ago. Factual data, use python.
 import datetime
@@ -41,14 +43,16 @@ year_ago = today - datetime.timedelta(days=365)
 url = google_search(f"temperature in Paris on {year_ago}", 1)[0]
 # get page content
 page_text = read_webpage(url)
-# construct a prompt for GPT-3 with the page content to get the temperature float
-prompt = f"{page_text}\n\nWhats the temperature in Paris on {year_ago}? Give the answer in python float format:"
+# construct a prompt for GPT-3 with the page content to get the temperature in python float format
+prompt = f"{page_text}\n\nTemperature in Paris on {year_ago} in python float format (e.g. 5.0):"
 # get temperature from GPT-3
-temp = ask_gpt3(prompt)
+temp_year_ago = ask_gpt3(prompt)
+temp_year_ago = float(re.sub(r'[^\d.]', '', temp_year_ago))
+print(f"Temperature in Paris on {year_ago}: {temp_year_ago}")
 
 # 4. Compare the two temperatures.
 # Use python to compare the two temperatures.
-if temp_today > temp_year_ago:
+if float(temp_today) > float(temp_year_ago):
     print("Today is hotter than a year ago.")
 elif temp_today < temp_year_ago:
     print("Today is cooler than a year ago.")
